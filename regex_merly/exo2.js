@@ -3,7 +3,7 @@ phoneForm.addEventListener('submit', function(event) {
     event.preventDefault(); // Empêche la soumission réelle du formulaire
     let phone = document.getElementById('adresseip').value;
     phone = phone.replace(/<[^>]?>/g, ""); // on remplace les balises html par un espace
-    if (/^[1-9]([0-9]){1,2}[ .-]?([0-9][ .-]?|[1-9]([0-9]){1,2})[ .-]?([0-9][ .-]?|[1-9]([0-9]){1,2})[ .-]?([0-9][ .-]?|[1-9]([0-9]){1,2})$/.test(phone)) 
+    if (/^([1-9][ .-]?|[1-9]([0-9]){1,2}[ .-]?)([0-9][ .-]?|[1-9]([0-9]){1,2}[ .-]?){2}([0-9][ .-]?|[1-9]([0-9]){1,2})$/.test(phone)) 
     {
         document.getElementById('result').innerHTML = 'Ladresse ' + phone + ' est une adresse <strong>valide</strong> !';
     } 
