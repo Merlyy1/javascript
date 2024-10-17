@@ -1,0 +1,55 @@
+Starting Nmap 6.47 ( http://nmap.org ) at 2018-10-08 11:02 CEST
+Nmap scan report for 192.168.0.10
+Host is up (0.0023s latency).
+MAC Address: E8:B7:48:69:78:E7 (Cisco Systems)
+Nmap scan report for 192.168.0.11
+Host is up (0.19s latency).
+MAC Address: A4:4E:31:E9:A6:C0 (Intel Corporate)
+Nmap scan report for 192.168.0.12
+Host is up (0.0042s latency).
+MAC Address: 20:16:D8:67:5E:FE (Liteon Technology)
+Nmap scan report for 192.168.0.13
+Host is up (0.0024s latency).
+MAC Address: 00:25:86:E7:24:CE (Tp-link Technologies Co.)
+Nmap scan report for 192.168.0.15
+Host is up (-0.10s latency).
+MAC Address: 00:08:9B:C4:1D:81 (ICP Electronics)
+Nmap scan report for 192.168.0.34
+Host is up (-0.10s latency).
+MAC Address: B8:27:EB:34:AB:35 (Raspberry Pi Foundation)
+Nmap scan report for 192.168.0.35
+Host is up (-0.058s latency).
+MAC Address: 3C:95:09:28:5E:BA (Unknown)
+Nmap scan report for 192.168.0.36
+Host is up (-0.060s latency).
+MAC Address: 68:94:23:4A:F3:F6 (Hon Hai Precision Ind. Co.)
+Nmap scan report for 192.168.0.37
+Host is up (-0.10s latency).
+MAC Address: B0:7F:B9:9B:90:97 (Unknown)
+Nmap scan report for 192.168.0.90
+Host is up (-0.088s latency).
+MAC Address: 80:26:89:4A:A5:78 (Unknown)
+Nmap scan report for 192.168.0.111
+Host is up (-0.11s latency).
+MAC Address: E8:94:F6:43:FF:15 (Tp-link Technologies Co.)
+Nmap scan report for 192.168.0.138
+Host is up (-0.17s latency).
+MAC Address: 48:0F:CF:4C:57:EA (Unknown)
+Nmap scan report for 192.168.0.151
+Host is up (0.00078s latency).
+MAC Address: 48:0F:CF:51:C4:9F (Unknown)
+Nmap scan report for 192.168.0.201
+Host is up (0.00038s latency).
+MAC Address: 80:26:89:4A:A5:A8 (Unknown)
+Nmap scan report for 192.168.0.250
+Host is up (0.00050s latency).
+MAC Address: 00:13:72:A0:3D:5E (Dell)
+Nmap scan report for 192.168.0.253
+Host is up (0.00058s latency).
+MAC Address: 6C:0B:84:93:C8:05 (Universal Global Scientific Industrial Co.)
+Nmap scan report for 192.168.0.254
+Host is up (0.00046s latency).
+MAC Address: 00:A0:F9:41:F5:34 (Bintec Communications Gmbh)
+Nmap scan report for 192.168.0.40
+Host is up.
+Nmap done: 255 IP addresses (18 hosts up) scanned in 4.91 seconds
