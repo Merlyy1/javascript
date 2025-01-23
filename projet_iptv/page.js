@@ -3,11 +3,11 @@ let acceder = document.getElementById('myForm'); //acceder est une référence �
 acceder.addEventListener('submit', function(event) {
     event.preventDefault(); // Empêche la soumission par défaut du formulaire
 
-    let prenom = acceder.elements['prenom'].value; //récupère les données du formulaire
-    let name = acceder.elements['name'].value;  //récupère les données du formulaire
-    let mdp = acceder.elements['mdp'].value; //récupère les données du formulaire
-    let another_mdp = acceder.elements['another_mdp'].value; //récupère les données du formulaire
-    let abonnement = acceder.elements['abonnement'].value; //récupère les données du formulaire
+    let prenom = acceder.elements['prenom'].value; //récupère le prenom du formulaire
+    let name = acceder.elements['name'].value;  //récupère le nom du formulaire
+    let mdp = acceder.elements['mdp'].value; //récupère le mdp du formulaire
+    let another_mdp = acceder.elements['another_mdp'].value; //récupère l'autre mdp du formulaire
+    let abonnement = acceder.elements['abonnement'].value; //récupère l'abonnement du formulaire
 
     
         if (prenom === '') {
