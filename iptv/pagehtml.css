@@ -1,0 +1,40 @@
+body {
+    display: flex;
+    justify-content: center; /*centre horizontalement*/
+    align-items: center; /*pareil mais verticalement*/
+    height: 100vh; /*Prend toute la hauteur de la fenêtre*/
+    
+    
+    /*background-image: url('C:/Users/merly/Downloads/javascript-main/projet_iptv/iptv.jpg'); /*chemin de l'image*/
+
+    background-image: url('/home/unowhy/Téléchargements/projet_iptv/iptv.jpg'); /*chemin de l'image*/
+    /*background-image: url('/home/ciel/Téléchargements/javascript-main/projet_iptv/iptv.jpg'); /*chemin de l'image*/
+    background-repeat: no-repeat; /*empeche la repetition de l'image*/
+    background-size: cover; /*Permet à l'image de couvrir tout le body sans déformation*/
+    background-position: center; /*Centre l'image sur la fenetre*/
+}
+
+h1 {
+    color: black;
+} 
+
+div {
+    width: 25%; /*largeur dla div */
+    padding: 10px; /*taille dla div*/
+    border: 2px solid #070101; /*bordure dla div*/
+    border-radius: 10px; /*pour arrondir la div*/
+    background-color: #46677a; /*couleur de fond dla div*/
+    
+}
+
+#eye {
+        width: 20px; /*largeur de l'image */     
+        transform: translateY(-100%) translateX(950%); /*déplace horizontalement et verticalement*/
+        cursor: pointer; 
+}
+
+#eye2 {
+    width: 20px; /*largeur de l'image */           
+    transform: translateY(-100%) translateX(950%); /*déplace horizontalement et verticalement*/
+    cursor: pointer;
+}
