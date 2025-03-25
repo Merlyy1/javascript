@@ -38,3 +38,9 @@ div {
     transform: translateY(-100%) translateX(950%); /*déplace horizontalement et verticalement*/
     cursor: pointer;
 }
+
+#eye3 {
+    width: 20px; /*largeur de l'image */           
+    transform: translateY(-100%) translateX(950%); /*déplace horizontalement et verticalement*/
+    cursor: pointer;
+}
