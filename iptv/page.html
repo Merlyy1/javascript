@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,15 +12,16 @@
     
 </head>
 <body>
-    
+    <script defer src="test.js"></script>
     <div>  
-        <h1><span style="font-weight:normal;">Interface Abonnée</span></h1>
+        <h1><span style="font-weight:normal;">Création d'Abonnée</span></h1>
             <form id="myForm">
 
                 <label for="prenom">Prénom :</label><br>
                 <input type="text" id="prenom" name="prenom"><br>
                 
-                <br>
+                <br> <!--ajout de la bibliothèque axios pour l'envoi au serveur-->
+                <script defer src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
                 <label for="names">Nom :</label><br>
                 <input type="text" id="names" name="names"><br>
