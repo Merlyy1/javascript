@@ -26,7 +26,7 @@ document.getElementById('login').addEventListener('submit', function(event) {
     if (logs === 'root' && mdp === 'root') {
         sessionStorage.setItem('authenticated', 'true');//stocke dans la mémoire du navigateur une clé authenticated
         //valeur true signifiant que l'utilisateur est connecté
-        window.location.href = 'page.html'; // Redirige vers la page interface abonnée
+        window.location.href = 'pageAbonnee.html'; // Redirige vers la page interface abonnée
     } else {
         alert('Identifiants incorrects');
     }
