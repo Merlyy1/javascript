@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", async function () {//domcontentloa
 
     async function mettreAJourChaines() {
         try {
-            const response = await axios.get("http://localhost:3000/recupCurrentStream");//requete get vers l'url contenant les flux, et stock dans response
+            const response = await axios.get("https://localhost:3000/recupCurrentStream");//requete get vers l'url contenant les flux, et stock dans response
             const flux = response.data; //response.data > contenant les données correspondants au flux actuellement streamé
 
             if (!flux || flux.length === 0) {//s'il n'y a aucun flux streamé
@@ -59,7 +59,11 @@ document.addEventListener("DOMContentLoaded", async function () {//domcontentloa
             
             let chainesAffichees = []; //definit un tableau qui contiendra les chaine a afficher
             if (abonnement === "Gratuit") {
-                chainesAffichees = flux.slice(0, 2); //les 2 premieres chaines du flux
+                if (flux.length === 2) {
+                    chainesAffichees = flux.slice(0, 1); // Prend seulement 1 chaîne si 2 sont diffusées
+                } else {
+                    chainesAffichees = flux.slice(0, 2); // Sinon, prend jusqu'à 2 chaînes
+                } //les 2 premieres chaines du flux
             } else if (abonnement === "Premium") {
                 chainesAffichees = flux; //tout les chaines du flux
             }
