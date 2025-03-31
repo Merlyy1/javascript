@@ -136,19 +136,7 @@ async function update() {
                     });
                 }
             } 
-            // else if (abonne_actuel.Abonnement === "Gratuit") {
-            //     abonne_actuel.Chaines = [];
-            
-            //     let min = (nbreChaine > 2) ? 2 : 1; // Si plus de 2 chaînes → 2 gratuites, sinon 1 seule
-            
-            //     for (let j = 0; j < min; j++) {
-            //         abonne_actuel.Chaines.push({
-            //             nom: JSON_test[j].name,
-            //             multicast: JSON_test[j].multicast,
-            //             port: JSON_test[j].port
-            //         });
-            //     }
-            // }
+          
             else if (abonne_actuel.Abonnement === "Gratuit") {
                 abonne_actuel.Chaines = [];
             
@@ -189,8 +177,6 @@ app.post('/submit', async (req, res) => { //traite les infos envoyés du formula
            abonnement
        } = req.body ; //permet d'extraire les propriétés et créer les variables
        // req.body = objet contenant les infos du formulaire
-
-    
 
        await test();
    
