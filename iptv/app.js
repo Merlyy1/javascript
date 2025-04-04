@@ -23,9 +23,14 @@ let httpsAgent = new https.Agent({
     ca: certStream
 });
 
+// let options = {
+//     key: fsp.readFileSync('key.pem'),
+//     cert: fsp.readFileSync('cert.pem')
+//     };
+
 let options = {
-    key: fsp.readFileSync('key.pem'),
-    cert: fsp.readFileSync('cert.pem')
+    key: fsp.readFileSync('keyTest.pem'),
+    cert: fsp.readFileSync('certTest1.pem')
     };
 
 //middleware
@@ -238,7 +243,7 @@ app.get('/recupCurrentStream', async (req, res) => { //get pour récupérer les 
     try {
         
         
-        let listechainejson = await axios.get('https://192.168.5.120:3000/current-streams', { httpsAgent});
+        let listechainejson = await axios.get('https://192.168.7.2:3000/current-streams', { httpsAgent});
         
         //current-streams : pour connaitre les adresses qui sont streamés
         //streams : liste des chaine avc d'autres info (pid, nom...)
@@ -270,8 +275,13 @@ app.get('/fiche_abonnee', async (req, res) => {
             //transfo en objet js 
             const fiche_abo = JSON.parse(fiche);
             //Envoyer le contenu du fichier en JSON
+            let aboSansMDP = fiche_abo.map(function(abonne)
+            {
+                let {Mdp, ...rest} = abonne;
+                return rest;
+            });
+            res.json(aboSansMDP);
             
-            res.json(fiche_abo);
         } catch (error) {
             console.log("Erreur lors de la lecture du fichier :", error);
             res.json({ message: "Erreur serveur" });
@@ -287,6 +297,7 @@ app.post('/verif', async (req, res) => {
         const fiche_abo = JSON.parse(fiche);
         // Envoyer le contenu du fichier en JSON
         res.json(fiche_abo);
+    
     } catch (error) {
         console.log("Erreur lors de la lecture du fichier :", error);
         res.status(500).json({ error: "Impossible de récupérer le fichier abonnée" });
@@ -309,3 +320,4 @@ sauvegardeAbonnee()
     .catch(error => {
         console.error("Erreur lors du chargement des abonnés :", error);
     });
+
