@@ -7,6 +7,9 @@ const port = 3000; //définit le port sur lequel l'appli sera exécutée
 const cors = require('cors'); //permet de lever les restrictions des navigateurs qui bloquent les requetes*/
 const axios = require('axios');
 const https = require('https');
+const crypto = require('crypto');
+require('dotenv').config();
+
 
 
 let chaine_abonnements = {
@@ -183,8 +186,15 @@ app.post('/submit', async (req, res) => { //traite les infos envoyés du formula
        } = req.body ; //permet d'extraire les propriétés et créer les variables
        // req.body = objet contenant les infos du formulaire
 
+       const HASH = crypto.createHash('sha256').update(mdp).digest('hex');
+
+       process.env.USER_HASH=HASH;
+
+       const dotenvContent = `USER_HASH=${HASH}\n`;
+       fsp.appendFileSync('.env',dotenvContent); //ajt le hachage du mdp au fichier env
+
        await test();
-   
+       
        let ChaineAbonne = [];
    
        if (abonnement === 'Gratuit') {
@@ -193,11 +203,11 @@ app.post('/submit', async (req, res) => { //traite les infos envoyés du formula
        else if (abonnement === 'Premium') {
            ChaineAbonne = chaine_abonnements.Premium;
        }
-      
    
        const Objetabonnee = {
        Identifiant : identifiant,
-       Mdp : mdp,
+       //Mdp : mdp,
+       Mdp : HASH,
        Abonnement : abonnement,
        Chaines: ChaineAbonne
        };
@@ -205,16 +215,9 @@ app.post('/submit', async (req, res) => { //traite les infos envoyés du formula
    
        Tableau_abo.push(Objetabonnee);
    
-       //convertit l'objet abonnee en json
-       //const JSON_abonnee = JSON.stringify(Tableau_abo);
-   
-       //l'objet abonnee json est insérer dans le fichier
-   
-       //await: fct de js , attend que la promesse soit résolue avant de continuer le code
-       //await fs.writeFile('fiche_abonnee.json', JSON_abonnee, 'utf8');
-   
+       
        await fs.writeFile('fiche_abonnee.json', JSON.stringify(Tableau_abo,null,1), 'utf8');
-   
+      
        console.log('Abonné ajouté au fichier:', Objetabonnee);
        //affiche l'objet abonnee correspondant à l'abonnée ajouté
        //await test();
@@ -288,22 +291,59 @@ app.get('/fiche_abonnee', async (req, res) => {
         }
     });
 
-app.post('/verif', async (req, res) => {
+// app.post('/verif', async (req, res) => {
 
+//     try {
+//         // Lire le fichier fiche_abonnee.json
+//         const fiche = await fs.readFile('fiche_abonnee.json', 'utf8');
+//         //transfo en objet js 
+//         const fiche_abo = JSON.parse(fiche);
+//         // Envoyer le contenu du fichier en JSON
+//         res.json(fiche_abo);
+    
+//     } catch (error) {
+//         console.log("Erreur lors de la lecture du fichier :", error);
+//         res.status(500).json({ error: "Impossible de récupérer le fichier abonnée" });
+//     }
+// });
+
+app.post('/verif', async (req, res) => {
     try {
+        const { identifiant, mdp } = req.body; // Récupère l'identifiant et le mot de passe envoyé
+        // console.log("id", identifiant)
+        // console.log("mdp", mdp)
+
         // Lire le fichier fiche_abonnee.json
         const fiche = await fs.readFile('fiche_abonnee.json', 'utf8');
-        //transfo en objet js 
+        // Transformer en objet JavaScript
         const fiche_abo = JSON.parse(fiche);
-        // Envoyer le contenu du fichier en JSON
-        res.json(fiche_abo);
-    
+
+        // Trouver l'abonné correspondant à l'identifiant
+        const abonne = fiche_abo.find(abo => abo.Identifiant === identifiant);
+
+        if (!abonne) {
+            return res.status(404).json({ error: "Abonné non trouvé" });
+        }
+
+        // Récupérer le hash du mot de passe enregistré dans le fichier .env
+        const storedHash = process.env.USER_HASH;
+
+        // Hasher le mot de passe soumis pour comparaison
+        const submittedHash = crypto.createHash('sha256').update(mdp).digest('hex');
+        // console.log("hash du mdp recu :",submittedHash)
+
+        // Comparer le mot de passe soumis avec le hash enregistré
+        if (submittedHash === storedHash) {
+            // Si les hashes correspondent, renvoyer l'abonné
+            res.json(abonne);
+        } else {
+            res.status(401).json({ error: "Mot de passe incorrect" });
+        }
     } catch (error) {
-        console.log("Erreur lors de la lecture du fichier :", error);
-        res.status(500).json({ error: "Impossible de récupérer le fichier abonnée" });
+        console.log("Erreur lors de la vérification de l'abonné :", error);
+        res.status(500).json({ error: "Impossible de vérifier l'abonné" });
     }
 });
-
 
 /*on appelle la fct avant le demarrage du serveur, car au lancement du serveur
 le tableau est vide : et le writefile ecrase le contenu du tableau (ligne 14) / QUand le serveur demarre, il remet les abonnée dans le tableau*/
