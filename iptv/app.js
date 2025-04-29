@@ -186,7 +186,7 @@ app.post('/submit', async (req, res) => { //traite les infos envoyés du formula
        } = req.body ; //permet d'extraire les propriétés et créer les variables
        // req.body = objet contenant les infos du formulaire
 
-       const HASH = crypto.createHash('sha256').update(mdp).digest('hex');
+       const HASH = crypto.createHash('sha3-256').update(mdp).digest('hex');
 
        process.env.USER_HASH=HASH;
 
@@ -310,8 +310,8 @@ app.get('/fiche_abonnee', async (req, res) => {
 app.post('/verif', async (req, res) => {
     try {
         const { identifiant, mdp } = req.body; // Récupère l'identifiant et le mot de passe envoyé
-        // console.log("id", identifiant)
-        // console.log("mdp", mdp)
+         console.log("id", identifiant)
+         console.log("mdp", mdp)
 
         // Lire le fichier fiche_abonnee.json
         const fiche = await fs.readFile('fiche_abonnee.json', 'utf8');
@@ -326,11 +326,12 @@ app.post('/verif', async (req, res) => {
         }
 
         // Récupérer le hash du mot de passe enregistré dans le fichier .env
-        const storedHash = process.env.USER_HASH;
+        //const storedHash = process.env.USER_HASH;
 
+        const storedHash = abonne.Mdp;
         // Hasher le mot de passe soumis pour comparaison
-        const submittedHash = crypto.createHash('sha256').update(mdp).digest('hex');
-        // console.log("hash du mdp recu :",submittedHash)
+        const submittedHash = crypto.createHash('sha3-256').update(mdp).digest('hex');
+         console.log("hash du mdp recu :",submittedHash)
 
         // Comparer le mot de passe soumis avec le hash enregistré
         if (submittedHash === storedHash) {
