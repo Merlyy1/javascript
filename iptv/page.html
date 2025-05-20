@@ -5,29 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projet</title>
     <link href="pagehtml.css" rel="stylesheet">
-    <script defer src="pageAbonnee.js"></script>
+    <link rel="icon" href="iptv.ico" type="image/x-icon">   <!--icone--> 
 
     <!--ajout de la bibliothèque axios pour l'envoi au serveur-->
-    <script defer src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    
+    <script defer src="axios.min.js.js"></script>
+    <script defer src="pageAbonnee.js"></script>
 </head>
 <body>
-    <script defer src="test.js"></script>
+    <!--<script defer src="test.js"></script>-->
     <div>  
-        <h1><span style="font-weight:normal;">Création d'Abonnée</span></h1>
+        <h1><span style="font-weight:normal;">Création d'Abonné(e)</span></h1>
             <form id="myForm">
 
                 <label for="identifiant">Identifiant :</label><br>
                 <input type="text" id="identifiant" name="identifiant"><br>
-            <!--
-                <label for="prenom">Prénom :</label><br>
-                <input type="text" id="prenom" name="prenom"><br>
-                
-                <br> 
-
-                <label for="names">Nom :</label><br>
-                <input type="text" id="names" name="names"><br>
-            -->
+            
                 <br>
 
                 <label for="mdp">Mot de passe :</label><br>
@@ -62,7 +54,7 @@
                 <!-- Les options des chaînes seront ajoutées dynamiquement ici -->
                 </select><br><br>
 
-                <button type="submit" value="Submit">Envoyer</button>
+                <button type="submit" value="submit">Envoyer</button>
                 
             </form>
     </div> 
