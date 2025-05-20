@@ -41,7 +41,7 @@ let options = {
 // app.use(cors());
 app.use(cors());
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'))); //permet de rendre les fichiers statiques accessibles côtés client
 app.use(express.json()); //middleware qui analyse/lit la req post contenant les données en json (axios) | traite les req json
 
 app.use(bodyParser.urlencoded({ extended: true })); //décode les données envoyé via un formulaire  urlencoded | traite le urlsearchparams*/
