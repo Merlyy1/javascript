@@ -10,6 +10,7 @@ const https = require('https');
 const crypto = require('crypto');
 require('dotenv').config();
 
+const path = require('path');
 
 
 let chaine_abonnements = {
@@ -40,6 +41,7 @@ let options = {
 // app.use(cors());
 app.use(cors());
 
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json()); //middleware qui analyse/lit la req post contenant les données en json (axios) | traite les req json
 
 app.use(bodyParser.urlencoded({ extended: true })); //décode les données envoyé via un formulaire  urlencoded | traite le urlsearchparams*/
@@ -188,7 +190,7 @@ app.post('/submit', async (req, res) => { //traite les infos envoyés du formula
 
        const HASH = crypto.createHash('sha3-256').update(mdp).digest('hex');
 
-       process.env.USER_HASH=HASH;
+       process.env.USER_HASH=HASH; //stocke dans le .env
 
        const dotenvContent = `USER_HASH=${HASH}\n`;
        fsp.appendFileSync('.env',dotenvContent); //ajt le hachage du mdp au fichier env
@@ -269,6 +271,11 @@ app.get('/recupCurrentStream', async (req, res) => { //get pour récupérer les 
     }
 });
 
+app.get('/creer-abonne', (req, res) => {
+    res.sendFile(path.join(__dirname,'views','page.html'));
+});
+
+// à enlever -> ------------------------------------------------------------------------------------------
 app.get('/fiche_abonnee', async (req, res) => {
     //crée une route get pour recup les données ; accessible via http://localhost:3000/fiche_abonnee
     //async pour utiliser await
@@ -280,8 +287,8 @@ app.get('/fiche_abonnee', async (req, res) => {
             //Envoyer le contenu du fichier en JSON
             let aboSansMDP = fiche_abo.map(function(abonne)
             {
-                let {Mdp, ...rest} = abonne;
-                return rest;
+                let {Mdp, ...rest} = abonne; //destructuration pour enlever le mdp
+                return rest; //récupère le reste sauf Mdp
             });
             res.json(aboSansMDP);
             
@@ -290,61 +297,51 @@ app.get('/fiche_abonnee', async (req, res) => {
             res.json({ message: "Erreur serveur" });
         }
     });
+// à enlever -> ------------------------------------------------------------------------------------------
 
-// app.post('/verif', async (req, res) => {
 
-//     try {
-//         // Lire le fichier fiche_abonnee.json
-//         const fiche = await fs.readFile('fiche_abonnee.json', 'utf8');
-//         //transfo en objet js 
-//         const fiche_abo = JSON.parse(fiche);
-//         // Envoyer le contenu du fichier en JSON
-//         res.json(fiche_abo);
+    app.post('/verif', async (req, res) => {
+        try {
+             const { identifiant, mdp } = req.body; // Récupère l'identifiant et le mot de passe soumis
+            //  console.log("Récupère les identifiant :")
+            //  console.log("id", identifiant)
+            //  console.log("mdp", mdp)
     
-//     } catch (error) {
-//         console.log("Erreur lors de la lecture du fichier :", error);
-//         res.status(500).json({ error: "Impossible de récupérer le fichier abonnée" });
-//     }
-// });
-
-app.post('/verif', async (req, res) => {
-    try {
-        const { identifiant, mdp } = req.body; // Récupère l'identifiant et le mot de passe envoyé
-         console.log("id", identifiant)
-         console.log("mdp", mdp)
-
-        // Lire le fichier fiche_abonnee.json
-        const fiche = await fs.readFile('fiche_abonnee.json', 'utf8');
-        // Transformer en objet JavaScript
-        const fiche_abo = JSON.parse(fiche);
-
-        // Trouver l'abonné correspondant à l'identifiant
-        const abonne = fiche_abo.find(abo => abo.Identifiant === identifiant);
-
-        if (!abonne) {
-            return res.status(404).json({ error: "Abonné non trouvé" });
+            // Lire le fichier fiche_abonnee.json
+            const fiche = await fs.readFile('fiche_abonnee.json', 'utf8');
+            // Transformer en objet JavaScript
+            const fiche_abo = JSON.parse(fiche);
+    
+            // Trouver l'abonné correspondant à l'identifiant
+            const abonne = fiche_abo.find(function (abo) {
+                return abo.Identifiant === identifiant;
+            });
+    
+            if (!abonne) {
+                return res.json({ error: "Abonné non trouvé" });
+            }
+    
+            //récupère le mdp haché stocké
+            const mdpHash = abonne.Mdp;
+    
+            // Hash le mot de passe soumis par STB pour comparaison
+            const hashSTB = crypto.createHash('sha3-256').update(mdp).digest('hex');
+             console.log("hash du mdp recu :",hashSTB)
+    
+            // Comparer le mot de passe soumis avec le hash enregistré
+            if (hashSTB === mdpHash) {
+                // Si les hashes correspondent, renvoyer l'abonné
+                res.json(abonne);
+            } else {
+                console.log("Mdp incorrect"); //demande n'a pas été effectué
+                res.json({error: "mot de passe incorrect"});
+            }
+        } catch (error) {
+            console.log("Erreur lors de la vérification de l'abonné :", error);
         }
+    });
 
-        // Récupérer le hash du mot de passe enregistré dans le fichier .env
-        //const storedHash = process.env.USER_HASH;
 
-        const storedHash = abonne.Mdp;
-        // Hasher le mot de passe soumis pour comparaison
-        const submittedHash = crypto.createHash('sha3-256').update(mdp).digest('hex');
-         console.log("hash du mdp recu :",submittedHash)
-
-        // Comparer le mot de passe soumis avec le hash enregistré
-        if (submittedHash === storedHash) {
-            // Si les hashes correspondent, renvoyer l'abonné
-            res.json(abonne);
-        } else {
-            res.status(401).json({ error: "Mot de passe incorrect" });
-        }
-    } catch (error) {
-        console.log("Erreur lors de la vérification de l'abonné :", error);
-        res.status(500).json({ error: "Impossible de vérifier l'abonné" });
-    }
-});
 
 /*on appelle la fct avant le demarrage du serveur, car au lancement du serveur
 le tableau est vide : et le writefile ecrase le contenu du tableau (ligne 14) / QUand le serveur demarre, il remet les abonnée dans le tableau*/
