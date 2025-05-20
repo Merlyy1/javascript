@@ -7,8 +7,9 @@ body {
     
     /*background-image: url('C:/Users/merly/Downloads/javascript-main/projet_iptv/iptv.jpg'); /*chemin de l'image*/
 
-    background-image: url('/home/unowhy/Téléchargements/projet_iptv/iptv.jpg'); /*chemin de l'image*/
+    /*background-image: url('/home/ciel/Téléchargements/projet_iptv/iptv.jpg'); /*chemin de l'image*/
     /*background-image: url('/home/ciel/Téléchargements/javascript-main/projet_iptv/iptv.jpg'); /*chemin de l'image*/
+    background-image: url('iptv.jpg'); /*chemin de l'image*/
     background-repeat: no-repeat; /*empeche la repetition de l'image*/
     background-size: cover; /*Permet à l'image de couvrir tout le body sans déformation*/
     background-position: center; /*Centre l'image sur la fenetre*/
